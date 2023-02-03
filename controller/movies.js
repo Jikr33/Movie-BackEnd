@@ -1,5 +1,6 @@
 const Category = require("../models/Movies");
 const axios = require("axios");
+const url = require("url");
 // middleware functions
 exports.getFavorites = async (req, res, next) => {
     //  const category = await Category.findById("63c7b36bfcf4cda4db0cc761")  // finds category by ID
@@ -54,7 +55,7 @@ exports.getFavorites = async (req, res, next) => {
 exports.getMovie = async (req, res, next) => {
     try {
         var movie = req.params.id;
-
+        movie = movie.replace("%20", " ");
         // const options = {
         //     method: "GET",
         //     url: "https://mdblist.p.rapidapi.com/",
@@ -92,7 +93,6 @@ exports.getMovie = async (req, res, next) => {
                 "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
             },
         };
-
         await axios
             .request(options)
             .then(function (response) {
