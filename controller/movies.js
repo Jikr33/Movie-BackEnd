@@ -55,6 +55,7 @@ exports.getFavorites = async (req, res, next) => {
 exports.getMovie = async (req, res, next) => {
     try {
         var movie = req.params.id;
+        movie = decodeURIComponent(movie);
         // const options = {
         //     method: "GET",
         //     url: "https://mdblist.p.rapidapi.com/",
