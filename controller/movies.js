@@ -65,32 +65,6 @@ exports.getMovie = async (req, res, next) => {
         //         "X-RapidAPI-Host": "mdblist.p.rapidapi.com",
         //     },
         // };
-        const options = {
-            method: "GET",
-            url: "https://movie-database-alternative.p.rapidapi.com/",
-            params: { s: movie, r: "json" },
-            headers: {
-                "X-RapidAPI-Key": "676d565cf9msh03913601fbc68d3p181769jsnc91829350ae4",
-                "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
-            },
-        };
-
-        await axios
-            .request(options)
-            .then(function (response) {
-                return res.status(200).json({
-                    success: true,
-                    data: `Shows movies with ${movie} Name`,
-                    movies: response.data,
-                });
-            })
-            .catch(function (error) {
-                return res.status(400).json({
-                    success: false,
-                    error: `${req.params.id}, ner tei movie bhguee!!!`,
-                });
-            });
-
         // await axios
         //     .request(options)
         //     .then(function (response) {
@@ -108,6 +82,32 @@ exports.getMovie = async (req, res, next) => {
         //             error: `${req.params.id}, ner tei movie bhguee!!!`,
         //         });
         //     });
+        const options = {
+            method: "GET",
+            url: "https://movie-database-alternative.p.rapidapi.com/",
+            params: { s: movie, r: "json" },
+            headers: {
+                "X-RapidAPI-Key":
+                    "676d565cf9msh03913601fbc68d3p181769jsnc91829350ae4",
+                "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
+            },
+        };
+
+        await axios
+            .request(options)
+            .then(function (response) {
+                return res.status(200).json({
+                    success: true,
+                    data: `Shows movies with ${movie} Name`,
+                    movies: response,
+                });
+            })
+            .catch(function (error) {
+                return res.status(400).json({
+                    success: false,
+                    error: `${req.params.id}, ner tei movie bhguee!!!`,
+                });
+            });
     } catch (err) {
         res.status(400).json({
             success: false,
