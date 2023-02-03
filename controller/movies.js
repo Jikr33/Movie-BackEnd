@@ -55,7 +55,8 @@ exports.getFavorites = async (req, res, next) => {
 exports.getMovie = async (req, res, next) => {
     try {
         var movie = req.params.id;
-        movie = movie.replace("%20", " ");
+        // movie = movie.replace("%20", " ");
+        var umovie = decodeURIComponent(movie)
         // const options = {
         //     method: "GET",
         //     url: "https://mdblist.p.rapidapi.com/",
@@ -86,7 +87,7 @@ exports.getMovie = async (req, res, next) => {
         const options = {
             method: "GET",
             url: "https://movie-database-alternative.p.rapidapi.com/",
-            params: { s: movie, r: "json" },
+            params: { s: umovie, r: "json" },
             headers: {
                 "X-RapidAPI-Key":
                     "676d565cf9msh03913601fbc68d3p181769jsnc91829350ae4",
