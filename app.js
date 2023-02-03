@@ -31,7 +31,8 @@ app.use(express.json());
 app.use(logger);
 app.use(morgan("combined", { stream: accessLogStream }));
 
-app.use(express.static(path.join(__dirname, "./client/build")));
+// app.use(express.static(path.join(__dirname, "public")));
+// app.use('/', express.static(path.join(__dirname, 'public')))
 
 // Bind controllers to routes
 app.use(paths.memes, require("./routes/memes"));
