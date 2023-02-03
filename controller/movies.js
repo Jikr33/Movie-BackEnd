@@ -55,8 +55,6 @@ exports.getFavorites = async (req, res, next) => {
 exports.getMovie = async (req, res, next) => {
     try {
         var movie = req.params.id;
-        // movie = movie.replace("%20", " ");
-        var umovie = decodeURIComponent(movie)
         // const options = {
         //     method: "GET",
         //     url: "https://mdblist.p.rapidapi.com/",
@@ -84,10 +82,20 @@ exports.getMovie = async (req, res, next) => {
         //             error: `${req.params.id}, ner tei movie bhguee!!!`,
         //         });
         //     });
+        // const options = {
+        //     method: "GET",
+        //     url: "https://movie-database-alternative.p.rapidapi.com/",
+        //     params: { s: toString(movie), r: "json" },
+        //     headers: {
+        //         "X-RapidAPI-Key":
+        //             "676d565cf9msh03913601fbc68d3p181769jsnc91829350ae4",
+        //         "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
+        //     },
+        // };
         const options = {
             method: "GET",
             url: "https://movie-database-alternative.p.rapidapi.com/",
-            params: { s: umovie, r: "json" },
+            params: { s: movie },
             headers: {
                 "X-RapidAPI-Key":
                     "676d565cf9msh03913601fbc68d3p181769jsnc91829350ae4",
@@ -97,18 +105,36 @@ exports.getMovie = async (req, res, next) => {
         await axios
             .request(options)
             .then(function (response) {
+                console.log(response.data);
                 return res.status(200).json({
                     success: true,
                     data: `Shows movies with ${movie} Name`,
-                    movies: response,
+                    movies: response.data,
                 });
             })
             .catch(function (error) {
-                return res.status(400).json({
+                res.status(400).json({
                     success: false,
-                    error: `${req.params.id}, ner tei movie bhguee!!!`,
+                    err: error,
                 });
             });
+        // await axios
+        //     .request(options)
+        //     .then(function (response) {
+        //         console.log(movie);
+        //         return res.status(200).json({
+        //             success: true,
+        //             data: `Shows movies with ${movie} Name`,
+        //             movies: response,
+        //         });
+        //     })
+        //     .catch(function (error) {
+        //         return res.status(400).json({
+        //             success: false,
+        //             error: `${req.params.id}, ner tei movie bhguee!!!`,
+        //             err: error
+        //         });
+        //     });
     } catch (err) {
         res.status(400).json({
             success: false,
