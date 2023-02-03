@@ -55,7 +55,8 @@ exports.getFavorites = async (req, res, next) => {
 exports.getMovie = async (req, res, next) => {
     try {
         var movie = req.params.id;
-        movie = decodeURIComponent(movie);
+        // movie = decodeURIComponent(movie);
+        movie = movie.replace("%20", " ");
         // const options = {
         //     method: "GET",
         //     url: "https://mdblist.p.rapidapi.com/",
@@ -109,7 +110,7 @@ exports.getMovie = async (req, res, next) => {
                 console.log(response.data);
                 return res.status(200).json({
                     success: true,
-                    data: `Shows movies with ${movie} Name`,
+                    data: `Shows movies with ${movie} name`,
                     movies: response.data,
                 });
             })
