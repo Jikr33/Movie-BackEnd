@@ -3,6 +3,11 @@ const dotenv = require("dotenv");
 const rfs = require("rotating-file-stream");
 const cors = require("cors");
 const path = require("path");
+
+// const cookieParser = require("cookie-parser");
+// const csrf = require("csurf");
+// const helmet = require("helmet");
+// const rateLimit = require("express-rate-limit");
 const app = express();
 require("dotenv").config({ path: "./config/config.env" });
 
@@ -27,9 +32,14 @@ var accessLogStream = rfs.createStream("access.log", {
 });
 
 app.use(cors());
+// app.use(csrf());
+// app.use(helmet());
 app.use(express.json());
 app.use(logger);
 app.use(morgan("combined", { stream: accessLogStream }));
+
+// app.use(csrf({ cookie: true }));
+// app.use(rateLimit());
 
 // app.use(express.static(path.join(__dirname, "public")));
 // app.use('/', express.static(path.join(__dirname, 'public')))
@@ -37,6 +47,7 @@ app.use(morgan("combined", { stream: accessLogStream }));
 // Bind controllers to routes
 app.use(paths.memes, require("./routes/memes"));
 app.use(paths.movies, require("./routes/movies"));
+
 // Catch all requests that don't match any route
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "./index.html"));
